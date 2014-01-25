@@ -7,7 +7,10 @@
 	"permissions": ["tabs","notifications","cookies","<all_urls>"],
    "web_accessible_resources": ["assets/icon/icon48.png"],
 	"icons": {
-		"48": "assets/icon/icon48.png"
+    "16": "assets/icon/icon16.ico",
+    "48": "assets/icon/icon48.png",
+    "96": "assets/icon/icon96.png",
+		"128": "assets/icon/icon128.png"
 	},
    "background": {
       "scripts": ["assets/js/popup.js","assets/js/background.js"]
