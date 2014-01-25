@@ -1,6 +1,7 @@
 {
-	"name": "oDesk Notifier",
-	"description": "oDesk Notifier",
+	"name": "oDesk Chrome",
+  "short_name": "oDesk Chrome",
+	"description": "oDesk for Google Chrome.",
 	"version": "1.0",
 	"manifest_version": 2,
 	"permissions": ["tabs","notifications","cookies","<all_urls>"],
@@ -13,7 +14,7 @@
    },
    "browser_action": {
      	"default_icon":  "assets/icon/icon16.ico",
-     	"default_title": "oDesk Notifier",
+     	"default_title": "oDesk",
      	"default_popup": "static/popup.html"
    }
 }
