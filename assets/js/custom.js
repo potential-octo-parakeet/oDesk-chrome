@@ -25,7 +25,7 @@ function oUserInbox(){
 		var thread = $('#inbox');
 		$('.oThread',thread).html('');
 		$.each(result.current_tray.threads,function(i,e){
-			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a href="'+e.thread_api+'">'+e.last_post_preview+'</a></li>');
+			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/mc/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+e.last_post_preview+'</a></li>');
 		});
 	});
 }
@@ -36,7 +36,7 @@ function oUserTickets(){
 		var thread = $('#tickets');
 		$('.oThread',thread).html('');
 		$.each(result.current_tray.threads,function(i,e){
-			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a href="'+e.thread_api+'">'+e.last_post_preview+'</a></li>');
+			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/mc/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+e.last_post_preview+'</a></li>');
 		});
 	});
 }
@@ -47,7 +47,7 @@ function oUserNotices(){
 		var thread = $('#notices');
 		$('.oThread',thread).html('');
 		$.each(result.current_tray.threads,function(i,e){
-			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a href="'+e.thread_api+'">'+e.subject+'</a></li>');
+			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/mc/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+e.subject+'</a></li>');
 		});
 	});
 }
