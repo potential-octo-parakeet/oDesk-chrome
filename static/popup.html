@@ -20,28 +20,33 @@
 	<hr>
 	<div class="row">
 		<div class="col-xs-12">
-			<ul class="nav nav-tabs">
-				<li class="active"><a href="#inbox" data-toggle="tab">Inbox</a></li>
-			  <li><a href="#tickets" data-toggle="tab">Tickets</a></li>
-			  <li><a href="#notices" data-toggle="tab">Notification</a></li>
-			</ul>
-			<!-- Tab panes -->
-			<div class="tab-content">
-			  <div class="tab-pane active" id="inbox">
-					<ul class="oThread">
-						<li><img src="../assets/img/throbber.gif"></li>
-					</ul>
-			  </div><!--/#inbox-->
-			  <div class="tab-pane" id="tickets">
-			  	<ul class="oThread">
-						<li><img src="../assets/img/throbber.gif"></li>
-					</ul>
-					</div><!--/#tickets-->
-			  <div class="tab-pane" id="notices">
-			  	<ul class="oThread">
-						<li><img src="../assets/img/throbber.gif"></li>
-					</ul>
-				</div><!--#notices-->
+			<h4 class="alert alert-danger" id="oAlert" style="display:none;">
+				Please <a href="https://www.odesk.com/login/" target="_blank">login to oDesk</a> to use this app.
+			</h4>
+			<div id="oThreads">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#inbox" data-toggle="tab">Inbox</a></li>
+				  <li><a href="#tickets" data-toggle="tab">Tickets</a></li>
+				  <li><a href="#notices" data-toggle="tab">Notification</a></li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+				  <div class="tab-pane active" id="inbox">
+						<ul class="oThread">
+							<li><img src="../assets/img/throbber.gif"></li>
+						</ul>
+				  </div><!--/#inbox-->
+				  <div class="tab-pane" id="tickets">
+				  	<ul class="oThread">
+							<li><img src="../assets/img/throbber.gif"></li>
+						</ul>
+						</div><!--/#tickets-->
+				  <div class="tab-pane" id="notices">
+				  	<ul class="oThread">
+							<li><img src="../assets/img/throbber.gif"></li>
+						</ul>
+					</div><!--#notices-->
+				</div><!--/.tab-content-->
 			</div>
 		</div>
 	</div>

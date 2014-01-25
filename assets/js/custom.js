@@ -1,8 +1,7 @@
 var uid = localStorage['oChromeUserID'];
 
 $(document).ready(function(){
-	
-	oUserInbox(); // init inbox
+	init();
 
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	  if(e.target.hash=="#inbox")
@@ -16,7 +15,6 @@ $(document).ready(function(){
 
 	});
 
-	oUserDetails();
 });
 
 function oUserInbox(){
@@ -27,6 +25,8 @@ function oUserInbox(){
 		$.each(result.current_tray.threads,function(i,e){
 			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/mc/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+e.last_post_preview+'</a></li>');
 		});
+	}).fail(function(){
+		oPlsLogin();
 	});
 }
 
@@ -57,4 +57,14 @@ function oUserDetails(){
 	$('.username').text(localStorage['oChromeUser']);
 	$('.userid').text(localStorage['oChromeUserID']);
 	$('.userlink').attr('href',localStorage['oChromeUserLink']);
+}
+
+function oPlsLogin(){
+	$('#oThreads').hide();
+	$('#oAlert').show();
+}
+
+function init(){
+	oUserDetails();
+	oUserInbox();
 }
