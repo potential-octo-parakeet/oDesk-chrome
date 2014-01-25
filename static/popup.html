@@ -1,0 +1,53 @@
+<html>
+<head>
+<link href="../assets/css/bootstrap.css" rel="stylesheet">
+<link href="../assets/css/custom.css" rel="stylesheet">
+</head>
+<body style="width:400px;">
+<div class="container">
+	<div class="row">
+		<div class="col-xs-2">
+			<img src="../assets/img/user.svg" style="width:50px;height:50px;" class="img-rounded userimg">
+		</div>
+		<div class="col-xs-10">
+			<div class="oProfile">
+				<h4 class="username">{username}</h4>
+				<h6 class="userid">{userid}</h6>
+				<a class="userlink" href="https://www.odesk.com/" target="_blank">View Profile</a>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-xs-12">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#inbox" data-toggle="tab">Inbox</a></li>
+			  <li><a href="#tickets" data-toggle="tab">Tickets</a></li>
+			  <li><a href="#notices" data-toggle="tab">Notification</a></li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  <div class="tab-pane active" id="inbox">
+					<ul class="oThread">
+						<li><img src="../assets/img/throbber.gif"></li>
+					</ul>
+			  </div><!--/#inbox-->
+			  <div class="tab-pane" id="tickets">
+			  	<ul class="oThread">
+						<li><img src="../assets/img/throbber.gif"></li>
+					</ul>
+					</div><!--/#tickets-->
+			  <div class="tab-pane" id="notices">
+			  	<ul class="oThread">
+						<li><img src="../assets/img/throbber.gif"></li>
+					</ul>
+				</div><!--#notices-->
+			</div>
+		</div>
+	</div>
+</div>
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/custom.js"></script>
+</body>
+</html>
