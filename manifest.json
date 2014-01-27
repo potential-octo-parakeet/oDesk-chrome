@@ -13,7 +13,7 @@
 		"128": "assets/icon/icon128.png"
 	},
    "background": {
-      "scripts": ["assets/js/popup.js","assets/js/background.js"]
+      "scripts": ["assets/js/background.js"]
    },
    "browser_action": {
      	"default_icon":  "assets/icon/icon16.ico",
