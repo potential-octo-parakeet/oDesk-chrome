@@ -1,0 +1,33 @@
+.oProfile h4,
+.oProfile h6,
+.oProfile a{
+	margin: 1px 0;
+}
+.oProfile a{
+	font-size:11px;
+}
+.oThread{
+	padding-left:0;
+	list-style: none;
+}
+.oThread li{
+	padding:5px 0;
+	border-bottom:1px solid #ddd;
+}
+.oThread li,
+.oThread li a{
+	font-size: 11px;
+	color: #428bca;
+}
+.oThread li.active{
+	font-weight: bold;
+	color: #2a6496;
+}
+.tab-content{
+	max-height: 200px;
+	overflow: auto;
+}
+.nav-tabs .label{
+	font-size:8px;
+	display: none;
+}
