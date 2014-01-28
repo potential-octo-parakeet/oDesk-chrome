@@ -1,60 +1,60 @@
-var notificationIcon  = '../assets/icon/icon48.png',
-		notificationTitle = 'oDesk Notification',
-		notificationText  = '';
+var chromedesk = {}, db = {};
 
-setInterval(oQuery,300000);
-setInterval(oChromeSave,3600000);
+setTimeout(function(){
+	chromedesk.query();
+	chromedesk.dbsave();
+},300000);
 
 chrome.runtime.onInstalled.addListener(function(){
-	oHttp("https://www.odesk.com/api/auth/v1/info.json",function(result){
+	chromedesk.http("https://www.odesk.com/api/auth/v1/info.json",function(result){
 		if(result.status==200){
 			localStorage.setItem('oDeskChrome',result.response);
 		}
 		if(result.status==401){
-			oBrowse("https://www.odesk.com/login")
+			chromedesk.browse("https://www.odesk.com/login")
 		}
 	});
 });
 
-function oQuery(){
-	var	db = JSON.parse(localStorage.getItem('oDeskChrome'));
+chromedesk.query = function(){
+	var message = '', unread = 0;
 
-	oHttp("https://www.odesk.com/api/mc/v2/trays/"+db.auth_user.uid+"/notifications;inbox;tickets;disputes/stats.json",function(result){
+	chromedesk.dbinit();
+
+	chromedesk.http("https://www.odesk.com/api/mc/v2/trays/"+db.auth_user.uid+"/notifications;inbox;tickets;disputes/stats.json",function(result){
 		if(result.status==200){
-			var res = JSON.parse(result.response), unreadCount = 0;		
-			notificationText = ''; // clear text
+			var res = JSON.parse(result.response);	
 			res.trays.forEach(function(n){
-				if(parseInt(n.unread))
-					notificationText += 'You have '+n.unread+' '+n.type+"\n";
-				unreadCount += parseInt(n.unread);
+				if(parseInt(n.unread)){
+					message += 'You have '+n.unread+' '+n.type+"\n";
+				}
+				unread += parseInt(n.unread);
 			});
 		}
-		if(unreadCount)
-			oNotice();
+		if(unread)
+			chromedesk.notice(message);
 	});
 }
 
-function oNotice(){
-	var notification = webkitNotifications.createNotification(
-	 	notificationIcon,
-	  notificationTitle,
-	  notificationText  
-	);
-	
-	notification.show();
+chromedesk.notice = function(text){
+	var note = chrome.notifications,
+			opts = {
+				type: "basic",
+				iconUrl: "../assets/icon/icon48.png",
+				title: "oDesk Notification",
+				message: text
+			};
 
-	notification.addEventListener('click',function(t){
-		oBrowse('https://www.odesk.com/mc/');
-	});
-
-	notification.addEventListener('show',function(){
+	note.create('a',opts,function(){
 		setTimeout(function(){
-			notification.close();
+			note.clear('a',function(){
+				console.log('notif cleared');
+			});
 		},5000);
 	});
 }
 
-function oCookie(domain,cookie,cb){
+chromedesk.cookie = function(domain,cookie,cb){
 	chrome.cookies.get({"url": domain, "name": cookie}, function(cookie){
 		if(cookie && cb){
 			cb(cookie.value);
@@ -62,22 +62,26 @@ function oCookie(domain,cookie,cb){
 	});
 }
 
-function oBrowse(domain){
-	chrome.tabs.create({url:domain});
+chromedesk.dbinit = function(){
+	db = JSON.parse(localStorage.getItem('oDeskChrome'));
 }
 
-function oChromeSave(){
-	oHttp('https://www.odesk.com/api/auth/v1/info.json',function(result){
+chromedesk.dbsave = function(){
+	chromedesk.http('https://www.odesk.com/api/auth/v1/info.json',function(result){
 		if(result.status==200){
 			localStorage.setItem('oDeskChrome',result.response);
 		}
 		else{
-			oBrowse('https://www.odesk.com/login');
+			chromedesk.browse('https://www.odesk.com/login');
 		}
 	});
 }
 
-function oHttp(url,cb){
+chromedesk.browse = function(domain){
+	chrome.tabs.create({url:domain});
+}
+
+chromedesk.http = function(url,cb){
 	var http = new XMLHttpRequest();
 	http.onreadystatechange = function(){
 		if(http.readyState==4)

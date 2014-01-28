@@ -1,7 +1,7 @@
 <html>
 <head>
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
-<link href="../assets/css/custom.css" rel="stylesheet">
+<link href="../assets/css/ochrome.css" rel="stylesheet">
 </head>
 <body style="width:400px;padding:10px 0;">
 <div class="container">
@@ -25,9 +25,9 @@
 			</h4>
 			<div id="oThreads">
 				<ul class="nav nav-tabs">
-					<li class="active"><a href="#inbox" data-toggle="tab">Inbox</a></li>
-				  <li><a href="#tickets" data-toggle="tab">Tickets</a></li>
-				  <li><a href="#notices" data-toggle="tab">Notification</a></li>
+					<li class="active"><a href="#inbox" data-toggle="tab">Inbox <span class="label label-danger">0</span></a></li>
+				  <li><a href="#tickets" data-toggle="tab">Tickets <span class="label label-danger">0</span></a></li>
+				  <li><a href="#notices" data-toggle="tab">Notification <span class="label label-danger">0</span></a></li>
 				</ul>
 				<!-- Tab panes -->
 				<div class="tab-content">
@@ -50,6 +50,9 @@
 			</div>
 		</div>
 	</div>
+</div>
+<!--modal-->
+<div class="modal">
 </div>
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
