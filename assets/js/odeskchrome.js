@@ -51,8 +51,7 @@ oChrome.notices = function(){
 oChrome.db = function(){
 	$.getJSON('https://www.odesk.com/api/auth/v1/info.json',function(result){
 		localStorage.setItem('oDeskChrome',JSON.stringify(result));
-	}).fail(function(){
-		oChrome.login();
-	});
+	})
+	.fail(function(){oChrome.login(); })
 	db = JSON.parse(localStorage.getItem('oDeskChrome'));
 }
