@@ -1,9 +1,9 @@
 var chromedesk = {}, db = {};
 
-setTimeout(function(){
+setInterval(function(){
 	chromedesk.query();
 	chromedesk.dbsave();
-},300000);
+},60000);
 
 chrome.runtime.onInstalled.addListener(function(){
 	chromedesk.http("https://www.odesk.com/api/auth/v1/info.json",function(result){
@@ -25,15 +25,26 @@ chromedesk.query = function(){
 		if(result.status==200){
 			var res = JSON.parse(result.response);	
 			res.trays.forEach(function(n){
+				/* undecided r1 
 				if(parseInt(n.unread)){
 					message += 'You have '+n.unread+' '+n.type+"\n";
 				}
+				*/
 				unread += parseInt(n.unread);
 			});
 		}
-		if(unread)
+		if(unread){
+			chromedesk.badge(unread);
+			/* r1
 			chromedesk.notice(message);
+			*/
+		}
 	});
+}
+
+chromedesk.badge = function(n){
+	chrome.browserAction.setBadgeText({text: n.toString()});
+	chrome.browserAction.setBadgeBackgroundColor({color:[255,0,0,150]});
 }
 
 chromedesk.notice = function(text){
