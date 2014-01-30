@@ -5,7 +5,7 @@
 	"version": "1.3",
 	"manifest_version": 2,
 	"permissions": ["tabs","notifications","cookies","<all_urls>"],
-   "web_accessible_resources": ["assets/icon/icon48.png"],
+  "web_accessible_resources": ["assets/icon/icon48.png"],
 	"icons": {
     "16": "assets/icon/icon16.ico",
     "48": "assets/icon/icon48.png",
@@ -19,5 +19,5 @@
      	"default_icon":  "assets/icon/icon16.ico",
      	"default_title": "oDesk",
      	"default_popup": "static/popup.html"
-   }
+   }//,"options_page": "static/options.html"
 }

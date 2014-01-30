@@ -3,7 +3,7 @@ var chromedesk = {}, db = {};
 setInterval(function(){
 	chromedesk.query();
 	chromedesk.dbsave();
-},60000);
+},90000);
 
 chrome.runtime.onInstalled.addListener(function(){
 	chromedesk.http("https://www.odesk.com/api/auth/v1/info.json",function(result){
@@ -25,20 +25,11 @@ chromedesk.query = function(){
 		if(result.status==200){
 			var res = JSON.parse(result.response);	
 			res.trays.forEach(function(n){
-				/* undecided r1 
-				if(parseInt(n.unread)){
-					message += 'You have '+n.unread+' '+n.type+"\n";
-				}
-				*/
+				localStorage.setItem('oDeskChrome.'+n.type,n.unread);
 				unread += parseInt(n.unread);
 			});
 		}
-		if(unread){
-			chromedesk.badge(unread);
-			/* r1
-			chromedesk.notice(message);
-			*/
-		}
+		chromedesk.badge(unread);
 	});
 }
 
@@ -81,9 +72,6 @@ chromedesk.dbsave = function(){
 	chromedesk.http('https://www.odesk.com/api/auth/v1/info.json',function(result){
 		if(result.status==200){
 			localStorage.setItem('oDeskChrome',result.response);
-		}
-		else{
-			chromedesk.browse('https://www.odesk.com/login');
 		}
 	});
 }
