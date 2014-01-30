@@ -3,7 +3,10 @@ oDesk-chrome
 
 oDesk for Chrome
 
-![oDesk Chrome](http://img.youtube.com/vi/_vXyuT_h42k/hqdefault.jpg "oDesk Chrome")
-
 Installation:
 https://chrome.google.com/webstore/detail/odesk-chrome/nebkpbgifnioajkgcofbkhlidomkjdlb
+
+** v1.4 **
+- check interval 90 seconds
+- notif badges
+- fixed window open when odesk not login or unreachable
