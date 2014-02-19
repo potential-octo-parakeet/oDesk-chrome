@@ -42,6 +42,7 @@ oChrome.inbox = function(){
 				unread = 0;
 		$('.oThread',thread).html('');
 		$.each(result.current_tray.threads,function(i,e){
+			if(typeof(e.id)!='undefined')
 			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/mc/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+e.last_post_preview+'</a></li>');
 		});
 	});
@@ -53,6 +54,7 @@ oChrome.tickets = function(){
 				unread = 0;
 		$('.oThread',thread).html('');
 		$.each(result.current_tray.threads,function(i,e){
+			if(typeof(e.id)!='undefined')
 			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/mc/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+e.last_post_preview+'</a></li>');
 		});
 	});
@@ -64,6 +66,7 @@ oChrome.notices = function(){
 				unread = 0;
 		$('.oThread',thread).html('');
 		$.each(result.current_tray.threads,function(i,e){
+			if(typeof(e.id)!='undefined')
 			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/mc/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+e.subject+'</a></li>');
 		});
 	});

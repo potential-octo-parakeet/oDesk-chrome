@@ -31,3 +31,6 @@
 	font-size:8px;
 	display: none;
 }
+.tooltip-inner{
+	font-size:11px;
+}

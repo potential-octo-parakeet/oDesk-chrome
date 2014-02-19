@@ -11,4 +11,6 @@ $(function(){
 	  if(e.target.hash=="#notices")
 	  	oChrome.notices();
 	});
+
+	$('a[data-toggle="tooltip"]').tooltip({placement:'left'});
 });
