@@ -2,7 +2,7 @@
 	"name": "oDesk Chrome",
   "short_name": "oDesk Chrome",
 	"description": "oDesk for Google Chrome.",
-	"version": "1.4",
+	"version": "1.4.1",
 	"manifest_version": 2,
 	"permissions": ["tabs","notifications","cookies","<all_urls>"],
   "web_accessible_resources": ["assets/icon/icon48.png"],
@@ -19,5 +19,5 @@
      	"default_icon":  "assets/icon/icon16.ico",
      	"default_title": "oDesk",
      	"default_popup": "static/popup.html"
-   }//,"options_page": "static/options.html"
+   }
 }

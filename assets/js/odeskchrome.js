@@ -4,6 +4,9 @@ oChrome.init = function(){
 	oChrome.db();
 	oChrome.user();
 	oChrome.inbox();
+	if(!navigator.onLine){
+		oChrome.offline();
+	}
 }
 
 oChrome.user = function(){
@@ -27,6 +30,10 @@ oChrome.user = function(){
 oChrome.login = function(){
 	$('#oThreads').hide();
 	$('#oAlert').show();
+}
+oChrome.login = function(){
+	$('#oThreads').hide();
+	$('#oOffline').show();
 }
 
 oChrome.inbox = function(){

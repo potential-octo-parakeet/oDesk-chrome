@@ -1,8 +1,10 @@
 var chromedesk = {}, db = {};
 
 setInterval(function(){
-	chromedesk.query();
-	chromedesk.dbsave();
+	if(navigator.onLine){
+		chromedesk.query();
+		chromedesk.dbsave();
+	}
 },90000);
 
 chrome.runtime.onInstalled.addListener(function(){
