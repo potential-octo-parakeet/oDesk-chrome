@@ -31,7 +31,8 @@ oChrome.login = function(){
 	$('#oThreads').hide();
 	$('#oAlert').show();
 }
-oChrome.login = function(){
+
+oChrome.offline = function(){
 	$('#oThreads').hide();
 	$('#oOffline').show();
 }
