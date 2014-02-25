@@ -81,6 +81,12 @@ oChrome.db = function(){
 	db = JSON.parse(localStorage.getItem('oDeskChrome'));
 }
 
+oChrome.transactions = function(){
+	var gend1 = new Date(db.server_time * 1000);
+			date1 = gend1.getFullYear() + '-' + gend1.getMonth() + '-' + gend1.getDate();
+	var url = "https://www.odesk.com/gds/finreports/v2/financial_account_owner/"+db.info.ref+"?tq=SELECT+date,subtype,description,amount+WHERE+date>='"+date1+"'+AND+date<=''&tqx=out:json";
+}
+
 oChrome.html2text = function(html){
 	var span = document.createElement("span");span.innerHTML = html;
 	return span.textContent || span.innerText;
