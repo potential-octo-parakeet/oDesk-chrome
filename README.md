@@ -14,6 +14,8 @@ Installation:
 https://chrome.google.com/webstore/detail/odesk-chrome/nebkpbgifnioajkgcofbkhlidomkjdlb
 
 ---
+![screenshot](https://raw.github.com/mvcejas/oDesk-chrome/master/assets/img/(02-25-2014%2020.36.16).png "screenshot")
+---
 
 **What's new?**
 ###### v1.4.3
