@@ -44,7 +44,7 @@ oChrome.inbox = function(){
 		$('.oThread',thread).html('');
 		$.each(result.current_tray.threads,function(i,e){
 			if(typeof(e.id)!='undefined')
-			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/mc/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+e.last_post_preview+'</a></li>');
+			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/mc/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+oChrome.html2text(e.last_post_preview)+'</a></li>');
 		});
 	});
 }
@@ -56,7 +56,7 @@ oChrome.tickets = function(){
 		$('.oThread',thread).html('');
 		$.each(result.current_tray.threads,function(i,e){
 			if(typeof(e.id)!='undefined')
-			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/mc/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+e.last_post_preview+'</a></li>');
+			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/tickets/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+oChrome.html2text(e.last_post_preview)+'</a></li>');
 		});
 	});
 }
@@ -68,7 +68,7 @@ oChrome.notices = function(){
 		$('.oThread',thread).html('');
 		$.each(result.current_tray.threads,function(i,e){
 			if(typeof(e.id)!='undefined')
-			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/mc/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+e.subject+'</a></li>');
+			$('.oThread',thread).append('<li '+(e.read==1?'':'class="active"')+'><a target="_blank" href="https://www.odesk.com/notifications/#thread/'+e.id+'" data-href="'+e.thread_api+'">'+oChrome.html2text(e.subject)+'</a></li>');
 		});
 	});
 }
@@ -79,4 +79,9 @@ oChrome.db = function(){
 	})
 	.fail(function(){oChrome.login(); })
 	db = JSON.parse(localStorage.getItem('oDeskChrome'));
+}
+
+oChrome.html2text = function(html){
+	var span = document.createElement("span");span.innerHTML = html;
+	return span.textContent || span.innerText;
 }
