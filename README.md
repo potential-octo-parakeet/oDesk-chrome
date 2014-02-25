@@ -5,7 +5,7 @@ oDesk Chrome version 1.4.* long run
 
 In order to use this tool successfully, you must persistently logged to oDesk.
 
-**Current features:**
+**What's in?**
 - Inbox
 - Tickets
 - Notifications
