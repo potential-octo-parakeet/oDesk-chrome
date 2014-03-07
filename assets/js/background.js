@@ -1,7 +1,7 @@
 var chromedesk = {}, db = {}, firstuse = false;
 
 setInterval(function() {
-    chromedesk.init();
+    chromedesk.init();    
 }, 90000);
 
 chrome.runtime.onInstalled.addListener(function() {
@@ -11,15 +11,15 @@ chrome.runtime.onInstalled.addListener(function() {
 
 chromedesk.init = function() {
     if (navigator.onLine) {
-        chromedesk.query();
+        chromedesk.check();
         chromedesk.dbsave();
     }
 };
 
-chromedesk.query = function() {
+chromedesk.check = function() {
     var unread = 0;
     
-    chromedesk.dbinit();
+    this.dbinit();
     try{
         chromedesk.http("https://www.odesk.com/api/mc/v2/trays/" + db.user.id + "/notifications;inbox;tickets;disputes/stats.json", function(result) {
             if (parseInt(result.status) === 200) {
@@ -29,11 +29,11 @@ chromedesk.query = function() {
                     unread += parseInt(n.unread);
                 });
             }
-            chromedesk.badge(unread);
         });
     } catch(e){
         //do nothing
     }
+    this.badge(unread);
 };
 
 chromedesk.badge = function(n) {
@@ -68,22 +68,31 @@ chromedesk.cookie = function(domain, cookie, cb) {
 };
 
 chromedesk.dbinit = function() {    
-    db = JSON.parse(localStorage.getItem('oDeskChrome'));
+    try{
+        db = JSON.parse(localStorage.getItem('oDeskChrome'));
+        db.user;// trial error
+    } catch(e){
+        //chromedesk.dbsave();
+    }
 };
 
 chromedesk.dbsave = function() {
-    chromedesk.http('https://www.odesk.com/api/hr/v2/users/me.json', function(result) {
-        if (parseInt(result.status) === 200) {
-            localStorage.setItem('oDeskChrome', result.response);
-            chromedesk.http('https://www.odesk.com/api/auth/v1/info.json', function(res) {
-                localStorage.setItem('oDeskChrome.portrait', JSON.parse(res.response).info.portrait_50_img);
-            });
-        }
-        if (parseInt(result.status)===401 && firstuse) {            
-            chromedesk.browse('https://www.odesk.com/login');
-            firstuse = false;
-        }
-    });
+    try{
+        chromedesk.http('https://www.odesk.com/api/hr/v2/users/me.json', function(result) {
+            if (parseInt(result.status) === 200) {
+                localStorage.setItem('oDeskChrome', result.response);
+                chromedesk.http('https://www.odesk.com/api/auth/v1/info.json', function(res) {
+                    localStorage.setItem('oDeskChrome.portrait', JSON.parse(res.response).info.portrait_50_img);
+                });
+            }
+            if (parseInt(result.status)===401 && firstuse) {    
+                chromedesk.browse('https://www.odesk.com/login');
+                firstuse = false;
+            }
+        });
+    } catch(e){
+        console.log(e);
+    }
 };
 
 chromedesk.browse = function(domain) {

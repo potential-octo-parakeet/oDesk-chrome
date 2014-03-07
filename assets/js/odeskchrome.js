@@ -1,13 +1,12 @@
-var oChrome = {}, db = {};
+var oChrome = {};
 
 oChrome.init = function() {
-    oChrome.db();
-    oChrome.user();
+    this.user();
     if (!navigator.onLine) {
         oChrome.offline();
         return false;
     }
-    switch (localStorage.getItem('oDeskChrome.tab')) {
+    switch (this.getTab()) {
         case 'inbox':
             oChrome.inbox();
             break;
@@ -26,29 +25,42 @@ oChrome.init = function() {
 };
 
 oChrome.user = function() {
-    var tab1 = $('[href=#inbox] > .label'),
-        tab2 = $('[href=#tickets] > .label'),
-        tab3 = $('[href=#disputes] > .label'),
-        tab4 = $('[href=#notices] > .label');
+    try{
+        var lab1 = $('[href=#inbox] > .label'),
+            lab2 = $('[href=#tickets] > .label'),
+            lab3 = $('[href=#disputes] > .label'),
+            lab4 = $('[href=#notices] > .label');            
+                    
+        $('[data-user="img"]').attr('src', this.getPortrait());
+        $('[data-user="name"]').text(this.getName());
+        $('[data-user="id"]').text(this.getUID());
+        $('[data-user="url"]').attr('href', this.getURL());
+         
+        var i = this.getInbox(), t = this.getTickets(), 
+            d = this.getDisputes(), n = this.getNotices();
+        
+        lab1.text(i);
+        lab2.text(i);
+        lab3.text(d);
+        lab4.text(n);
 
-    $('[data-user="img"]').attr('src', localStorage.getItem('oDeskChrome.portrait'));
-    $('[data-user="name"]').text(db.user.first_name + ' ' + db.user.last_name);
-    $('[data-user="id"]').text(db.user.id);
-    $('[data-user="url"]').attr('href', db.user.public_url);
-    tab1.text(localStorage.getItem('oDeskChrome.inbox'));
-    tab2.text(localStorage.getItem('oDeskChrome.tickets'));
-    tab3.text(localStorage.getItem('oDeskChrome.disputes'));
-    tab4.text(localStorage.getItem('oDeskChrome.notifications'));
-
-    parseInt(localStorage.getItem('oDeskChrome.inbox')) === 0 ? tab1.hide() : tab1.show();
-    parseInt(localStorage.getItem('oDeskChrome.tickets')) === 0 ? tab2.hide() : tab2.show();
-    parseInt(localStorage.getItem('oDeskChrome.disputes')) === 0 ? tab3.hide() : tab3.show();
-    parseInt(localStorage.getItem('oDeskChrome.notifications')) === 0 ? tab4.hide() : tab4.show();
+        (i === 0) ? lab1.hide() : lab1.show();
+        (t === 0) ? lab2.hide() : lab2.show();
+        (d === 0) ? lab3.hide() : lab3.show();
+        (n === 0) ? lab4.hide() : lab4.show();
+    } catch(e){
+        oChrome.login();
+        oChrome.infoHide();
+    }
 };
 
 oChrome.login = function() {
     $('#oThreads').hide();
     $('#oAlert').show();
+};
+
+oChrome.infoHide = function() {
+    $('#info').hide();
 };
 
 oChrome.offline = function() {
@@ -57,67 +69,133 @@ oChrome.offline = function() {
 };
 
 oChrome.inbox = function() {
-    $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + db.user.id + "/inbox.json", function(result) {
-        var thread = $('#inbox');
+    try{
+        $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + this.getUID() + "/inbox.json", function(result) {
+            var thread = $('#inbox');
 
-        $('.oThread', thread).html('');
-        $.each(result.current_tray.threads, function(i, e) {
-            if (typeof (e.id) !== 'undefined')
-                $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/mc/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.last_post_preview) + '</a></li>');
-        });
-    }).fail(function() {
-        oChrome.login();
-    });
-    localStorage.setItem('oDeskChrome.tab', 'inbox');
+            $('.oThread', thread).html('');
+            $.each(result.current_tray.threads, function(i, e) {
+                if (typeof (e.id) !== 'undefined')
+                    $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/mc/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.last_post_preview) + '</a></li>');
+            });
+        }).fail(function() {
+            oChrome.login();
+        });        
+    } catch(e){
+        oChrome.dbinit();
+    }
+    this.setTab('inbox');
 };
 
 oChrome.tickets = function() {
-    $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + db.user.id + "/tickets.json", function(result) {
-        var thread = $('#tickets');
+    try{
+        $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + this.getUID() + "/tickets.json", function(result) {
+            var thread = $('#tickets');
 
-        $('.oThread', thread).html('');
-        $.each(result.current_tray.threads, function(i, e) {
-            if (typeof (e.id) !== 'undefined')
-                $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/tickets/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.last_post_preview) + '</a></li>');
-        });
-    }).fail(function() {
-        oChrome.login();
-    });
-    localStorage.setItem('oDeskChrome.tab', 'tickets');
+            $('.oThread', thread).html('');
+            $.each(result.current_tray.threads, function(i, e) {
+                if (typeof (e.id) !== 'undefined')
+                    $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/tickets/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.last_post_preview) + '</a></li>');
+            });
+        }).fail(function() {
+            oChrome.login();
+        });        
+    } catch(e){
+        oChrome.dbinit();
+    }
+    this.setTab('tickets');
 };
 
 oChrome.disputes = function() {
-    $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + db.user.id + "/disputes.json", function(result) {
-        var thread = $('#disputes');
+    try{
+        $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + this.getUID() + "/disputes.json", function(result) {
+            var thread = $('#disputes');
 
-        $('.oThread', thread).html('');
-        $.each(result.current_tray.threads, function(i, e) {
-            if (typeof (e.id) !== 'undefined')
-                $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/disputes/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.subject) + '</a></li>');
-        });
-    }).fail(function() {
-        oChrome.login();
-    });
-    localStorage.setItem('oDeskChrome.tab', 'disputes');
+            $('.oThread', thread).html('');
+            $.each(result.current_tray.threads, function(i, e) {
+                if (typeof (e.id) !== 'undefined')
+                    $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/disputes/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.subject) + '</a></li>');
+            });
+        }).fail(function() {
+            oChrome.login();
+        });        
+    } catch(e){
+        oChrome.dbinit();
+    }
+    this.setTab('disputes');
 };
 
 oChrome.notices = function() {
-    $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + db.user.id + "/notifications.json", function(result) {
-        var thread = $('#notices');
+    try{
+        $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + this.getUID() + "/notifications.json", function(result) {
+            var thread = $('#notices');
 
-        $('.oThread', thread).html('');
-        $.each(result.current_tray.threads, function(i, e) {
-            if (typeof (e.id) !== 'undefined')
-                $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/notifications/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.subject) + '</a></li>');
-        });
-    }).fail(function() {
-        oChrome.login();
-    });
-    localStorage.setItem('oDeskChrome.tab', 'notices');
+            $('.oThread', thread).html('');
+            $.each(result.current_tray.threads, function(i, e) {
+                if (typeof (e.id) !== 'undefined')
+                    $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/notifications/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.subject) + '</a></li>');
+            });
+        }).fail(function() {
+            oChrome.login();
+        });        
+    } catch(e){
+        oChrome.dbinit();
+    }
+    this.setTab('notices');
 };
 
-oChrome.db = function() {
-    db = JSON.parse(localStorage.getItem('oDeskChrome'));
+oChrome.setTab = function(tab){
+    localStorage.setItem('oDeskChrome.tab', tab);
+};
+
+oChrome.getTab = function(){
+    return localStorage.getItem('oDeskChrome.tab');
+};
+
+oChrome.getUID = function(){
+    return JSON.parse(localStorage.getItem('oDeskChrome')).user.id;  
+};
+
+oChrome.getURL = function(){
+    return JSON.parse(localStorage.getItem('oDeskChrome')).user.public_url;  
+};
+
+oChrome.getName = function(){
+    var u = JSON.parse(localStorage.getItem('oDeskChrome')).user;
+    return u.first_name + ' ' + u.last_name;
+};
+
+oChrome.getPortrait = function(){
+    return localStorage.getItem('oDeskChrome.portrait') || '../assets/img/user.svg';
+};
+
+oChrome.getInbox = function(){
+    return parseInt(localStorage.getItem('oDeskChrome.inbox') || 0);
+};
+
+oChrome.getTickets = function(){
+    return parseInt(localStorage.getItem('oDeskChrome.tickets') || 0);
+};
+
+oChrome.getDisputes = function(){
+    return parseInt(localStorage.getItem('oDeskChrome.disputes') || 0);
+};
+
+oChrome.getNotices = function(){
+    return parseInt(localStorage.getItem('oDeskChrome.notifications') || 0);
+};
+
+oChrome.dbinit = function(){
+    try{
+        $.get('https://www.odesk.com/api/hr/v2/users/me.json', function(result){            
+            localStorage.setItem('oDeskChrome', JSON.stringify(result));
+            $.getJSON('https://www.odesk.com/api/auth/v1/info.json', function(res) {
+                localStorage.setItem('oDeskChrome.portrait', res.info.portrait_50_img);
+            });
+        });
+    } catch(e){
+        console.log(e);
+    }
 };
 
 oChrome.html2text = function(html) {

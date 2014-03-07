@@ -18,7 +18,7 @@ $(function() {
         }
     });
 
-    switch (localStorage.getItem('oDeskChrome.tab')) {
+    switch (oChrome.getTab()) {
         case 'inbox':
             $('a[href="#inbox"').parent('li').addClass('active');
             $('#inbox').addClass('active');
