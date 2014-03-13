@@ -40,7 +40,7 @@ oChrome.user = function() {
             d = this.getDisputes(), n = this.getNotices();
         
         lab1.text(i);
-        lab2.text(i);
+        lab2.text(t);
         lab3.text(d);
         lab4.text(n);
 
