@@ -25,15 +25,20 @@ chromedesk.check = function() {
             if (parseInt(result.status) === 200) {
                 var res = JSON.parse(result.response);
                 res.trays.forEach(function(n) {
-                    localStorage.setItem('oDeskChrome.' + n.type, n.unread);
-                    unread += parseInt(n.unread);
+                  var t = n.type, ur = parseInt(n.unread);
+                  if(ur==null || ur=='NaN' || ur==''){
+                    ur = 0;
+                  }
+                  localStorage.setItem('oDeskChrome.' + t, ur);
+                  unread += ur;
+                  console.log('unread.'+t+':'+unread);
                 });
+                chromedesk.badge(unread);
             }
         });
     } catch(e){
         //do nothing
-    }
-    this.badge(unread);
+    }    
 };
 
 chromedesk.badge = function(n) {

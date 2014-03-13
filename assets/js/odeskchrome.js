@@ -71,10 +71,11 @@ oChrome.offline = function() {
 oChrome.inbox = function() {
     try{
         $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + this.getUID() + "/inbox.json", function(result) {
-            var thread = $('#inbox');
-
-            $('.oThread', thread).html('');
-            $.each(result.current_tray.threads, function(i, e) {
+            var ctray  = result.current_tray,
+                thread = $('#inbox');
+                
+            $('.oThread', thread).html('');            
+            $.each(ctray.threads, function(i, e) {
                 if (typeof (e.id) !== 'undefined')
                     $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/mc/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.last_post_preview) + '</a></li>');
             });
@@ -90,10 +91,11 @@ oChrome.inbox = function() {
 oChrome.tickets = function() {
     try{
         $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + this.getUID() + "/tickets.json", function(result) {
-            var thread = $('#tickets');
-
+            var ctray  = result.current_tray,
+                thread = $('#tickets');
+               
             $('.oThread', thread).html('');
-            $.each(result.current_tray.threads, function(i, e) {
+            $.each(ctray.threads, function(i, e) {
                 if (typeof (e.id) !== 'undefined')
                     $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/tickets/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.last_post_preview) + '</a></li>');
             });
@@ -109,10 +111,11 @@ oChrome.tickets = function() {
 oChrome.disputes = function() {
     try{
         $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + this.getUID() + "/disputes.json", function(result) {
-            var thread = $('#disputes');
-
-            $('.oThread', thread).html('');
-            $.each(result.current_tray.threads, function(i, e) {
+            var ctray  = result.current_tray,
+                thread = $('#disputes');
+               
+            $('.oThread', thread).html('');            
+            $.each(ctray.threads, function(i, e) {
                 if (typeof (e.id) !== 'undefined')
                     $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/disputes/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.subject) + '</a></li>');
             });
@@ -128,10 +131,11 @@ oChrome.disputes = function() {
 oChrome.notices = function() {
     try{
         $.getJSON("https://www.odesk.com/api/mc/v1/trays/" + this.getUID() + "/notifications.json", function(result) {
-            var thread = $('#notices');
-
-            $('.oThread', thread).html('');
-            $.each(result.current_tray.threads, function(i, e) {
+            var ctray  = result.current_tray,
+                thread = $('#notices');
+               
+            $('.oThread', thread).html('');            
+            $.each(ctray.threads, function(i, e) {
                 if (typeof (e.id) !== 'undefined')
                     $('.oThread', thread).append('<li ' + (parseInt(e.read) === 1 ? '' : 'class="active"') + '><a target="_blank" href="https://www.odesk.com/notifications/#thread/' + e.id + '" data-href="' + e.thread_api + '" rel="nofollow">' + oChrome.html2text(e.subject) + '</a></li>');
             });
