@@ -1,0 +1,57 @@
+commit 7bafedc6b199bb6ebcf616f47863ee30d77da962
+Author: Mar C <mar@mvcejas.com>
+Date:   Thu Mar 13 09:57:16 2014 +0800
+
+    update manif
+
+diff --git a/manifest.json b/manifest.json
+index e11589e..14f2fb0 100644
+--- a/manifest.json
++++ b/manifest.json
+@@ -1,23 +1,23 @@
+ {
+-    "name" : "oDesk Chrome",
+-    "short_name" : "oDesk Chrome",
+-    "description" : "oDesk for Google Chrome.",
+-    "version" : "1.4.5",
+-    "manifest_version" : 2,
+-    "permissions" : [ "tabs", "notifications", "cookies", "<all_urls>" ],
+-    "web_accessible_resources" : [ "assets/icon/icon48.png" ],
+-    "icons" : {
+-        "16" : "assets/icon/icon16.ico",
+-        "48" : "assets/icon/icon48.png",
+-        "96" : "assets/icon/icon96.png",
+-        "128" : "assets/icon/icon128.png"
+-    },
+-    "background" : {
+-        "scripts" : [ "assets/js/background.js" ]
+-    },
+-    "browser_action" : {
+-        "default_icon" : "assets/icon/icon16.ico",
+-        "default_title" : "oDesk",
+-        "default_popup" : "static/popup.html"
+-    }
+-}
+\ No newline at end of file
++  "name": "oDesk Chrome",
++  "short_name": "oDesk Chrome",
++  "description": "oDesk for Google Chrome.",
++  "version": "1.4.7",
++  "manifest_version": 2,
++  "permissions": ["tabs", "notifications", "cookies", "<all_urls>"],
++  "web_accessible_resources": ["assets/icon/icon48.png"],
++  "icons": {
++    "16": "assets/icon/icon16.ico",
++    "48": "assets/icon/icon48.png",
++    "96": "assets/icon/icon96.png",
++    "128": "assets/icon/icon128.png"
++  },
++  "background": {
++    "scripts": ["assets/js/background.js"]
++  },
++  "browser_action": {
++    "default_icon": "assets/icon/icon16.ico",
++    "default_title": "oDesk",
++    "default_popup": "static/popup.html"
++  }
++}
